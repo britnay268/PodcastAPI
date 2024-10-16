@@ -1,5 +1,8 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
+using PodcastAPI.Interfaces;
+using PodcastAPI.Services;
+using PodcastAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +18,11 @@ builder.Services.Configure<JsonOptions>(options =>
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
-//builder.Services.AddScoped<IBookService, BookService>();
-//builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IEpisodeService, EpisodeService>();
+builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 
-//builder.Services.AddScoped<IAuthorService, AuthorService>();
-//builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<IPodcastService, PodcastService>();
+builder.Services.AddScoped<IPodcastRepository, PodcastRepository>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
