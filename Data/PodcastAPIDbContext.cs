@@ -1,11 +1,10 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 namespace PodcastAPI.Data
 {
-	public class PodcastAPIDbContext
+	public class PodcastAPIDbContext : DbContext
 	{
-		public PodcastAPIDbContext()
-		{
-		}
+		
 	}
 }
 
