@@ -14,27 +14,27 @@ public class EpisodeRepository : IEpisodeRepository
 		dbContext = context;
 	}
 
-    public Task<Episode> CreateEpisodeAsync(Episode episode)
+    public async Task<Episode> CreateEpisodeAsync(Episode episode)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Episode> DeleteEpisodeAsync(int id)
+    public async Task<Episode> DeleteEpisodeAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<List<Episode>> GetFavoriteEpisodesAsync(int userId)
+    public async Task<List<Episode>> GetFavoriteEpisodesAsync(int userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<FavoriteEpisode> ToggleFavoriteEpisodeAsync(int episodeId, int userId)
+    public async Task<FavoriteEpisode> ToggleFavoriteEpisodeAsync(int episodeId, int userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Episode> UpdateEpisodeAsync(int id, Episode episode)
+    public async Task<Episode> UpdateEpisodeAsync(int id, Episode episode)
     {
         throw new NotImplementedException();
     }
