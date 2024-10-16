@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.Json;
 using PodcastAPI.Interfaces;
 using PodcastAPI.Services;
 using PodcastAPI.Repositories;
+using PodcastAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,5 +41,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapEpisodeEndpoints();
+app.MapPodcastEndpoints();
+app.MapGenreEndpoints();
+app.MapUserEndpoints();
 
 app.Run();
