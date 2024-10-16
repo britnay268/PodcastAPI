@@ -3,7 +3,7 @@ using PodcastAPI.Models;
 
 namespace PodcastAPI.Interfaces;
 
-public interface IPodcastRepository
+public interface IPodcastService
 {
     Task<List<Podcast>> GetPodcastsAsync(int userId);
 
