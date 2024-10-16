@@ -4,6 +4,7 @@ using PodcastAPI.Interfaces;
 using PodcastAPI.Services;
 using PodcastAPI.Repositories;
 using PodcastAPI.Endpoints;
+using PodcastAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // allows our api endpoints to access the database through Entity Framework Core
-//builder.Services.AddNpgsql<PodcastAPIDbContext>(builder.Configuration["PodcastAPIConnectionString"]);
+builder.Services.AddNpgsql<PodcastAPIDbContext>(builder.Configuration["PodcastAPIConnectionString"]);
 
 // Set the JSON serializer options
 builder.Services.Configure<JsonOptions>(options =>
