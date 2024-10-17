@@ -29,7 +29,6 @@
     <None Remove="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="DTOs\" />
     <Folder Include="Endpoints\" />
     <Folder Include="Interfaces\" />

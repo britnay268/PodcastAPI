@@ -11,5 +11,6 @@ public class Episode
 	public DateTime CreatedOn { get; set; }
 	public int PodcastId { get; set; }
 	public Podcast Podcast { get; set; }
+	public List<User> UsersFavorited { get; set; }
 }
 
