@@ -51,6 +51,6 @@ public class PodcastData
             CreatedOn = new DateTime(2024, 10, 12),
             UserId = 4
         }
-	}
+    };
 }
 

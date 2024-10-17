@@ -14,6 +14,7 @@ namespace PodcastAPI.Models
         public User User { get; set; }
         public List<Episode> Episodes { get; set; }
         public List<Genre> Genres { get; set; }
+        public List<User> UsersFavorited { get; set; }
     }
 }
 

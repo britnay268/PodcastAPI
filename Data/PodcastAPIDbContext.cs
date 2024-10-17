@@ -22,6 +22,34 @@ public class PodcastAPIDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.FavoriteEpisodes)
+            .WithMany(e => e.UsersFavorited)
+            .UsingEntity<FavoriteEpisode>();
 
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.FavoritePodcasts)
+            .WithMany(p => p.UsersFavorited)
+            .UsingEntity<FavoritePodcast>();
+
+        modelBuilder.Entity<Genre>()
+            .HasMany(g => g.Podcasts)
+            .WithMany(p => p.Genres)
+            .UsingEntity<PodcastGenre>();
+
+        modelBuilder.Entity<Podcast>()
+            .HasOne(p => p.User)
+            .WithMany(u => u.Podcasts)
+            .HasForeignKey(p => p.UserId)
+            .IsRequired();
+
+        modelBuilder.Entity<Episode>().HasData(EpisodeData.Episodes);
+        modelBuilder.Entity<FavoriteEpisode>().HasData(FavoriteEpisodeData.FavoriteEpisodes);
+        modelBuilder.Entity<FavoritePodcast>().HasData(FavoritePodcastData.FavoritePodcasts);
+        modelBuilder.Entity<Genre>().HasData(GenreData.Genres);
+        modelBuilder.Entity<Podcast>().HasData(PodcastData.Podcasts);
+        modelBuilder.Entity<PodcastGenre>().HasData(PodcastGenreData.PodcastGenres);
+        modelBuilder.Entity<ShowdownResult>().HasData(ShowdownResultsData.ShowdownResults);
+        modelBuilder.Entity<User>().HasData(UserData.Users);
     }
 }
