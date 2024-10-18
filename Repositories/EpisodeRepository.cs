@@ -36,28 +36,34 @@ public class EpisodeRepository : IEpisodeRepository
         return episodeToDelete;
     }
 
-    public async Task<List<Episode>> GetFavoriteEpisodesAsync(int userId)
+    public async Task<List<User>> GetFavoriteEpisodesAsync(int userId)
     {
         // To be tested
-        return await dbContext.Episodes.Include(u => u.UsersFavorited).Where(u => u.Id == userId).ToListAsync();
+        return await dbContext.Users.Include(u => u.FavoriteEpisodes).Where(u => u.Id == userId).ToListAsync();
     }
 
-    public async Task<bool> ToggleFavoriteEpisodeAsync(int episodeId, int userId, FavoriteEpisode favoriteEpisode)
+    public async Task<bool> ToggleFavoriteEpisodeAsync(int episodeId, int userId)
     {
-        var episodeToFavorite = await dbContext.FavoriteEpisodes.SingleOrDefaultAsync(fe => fe.EpisodeId == episodeId && fe.UserId == userId);
+        var episodeToFavorite = await dbContext.Episodes.Include(e => e.UsersFavorited).SingleOrDefaultAsync(uf => uf.Id == episodeId);
 
         if (episodeToFavorite == null)
         {
-            dbContext.FavoriteEpisodes.Add(favoriteEpisode);
-            return true;
+            return false; 
+        }
+
+        var isFavorite = episodeToFavorite.UsersFavorited.Any(uf => uf.Id == userId);
+
+        if (!isFavorite)
+        {
+            episodeToFavorite.UsersFavorited.Add(dbContext.Users.Find(userId));
         }
         else
         {
-            dbContext.FavoriteEpisodes.Remove(episodeToFavorite);
-            return false;
+            episodeToFavorite.UsersFavorited.Remove(dbContext.Users.Find(userId));
         }
 
         await dbContext.SaveChangesAsync();
+        return isFavorite;
     }
 
     public async Task<Episode> UpdateEpisodeAsync(int id, Episode episode)

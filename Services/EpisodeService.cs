@@ -22,14 +22,14 @@ public class EpisodeService : IEpisodeService
         return await _episodeRepository.DeleteEpisodeAsync(id);
     }
 
-    public async Task<List<Episode>> GetFavoriteEpisodesAsync(int userId)
+    public async Task<List<User>> GetFavoriteEpisodesAsync(int userId)
     {
         return await _episodeRepository.GetFavoriteEpisodesAsync(userId);
     }
 
-    public async Task<bool> ToggleFavoriteEpisodeAsync(int episodeId, int userId, FavoriteEpisode favoriteEpisode)
+    public async Task<bool> ToggleFavoriteEpisodeAsync(int episodeId, int userId)
     {
-        return await _episodeRepository.ToggleFavoriteEpisodeAsync(episodeId, userId, favoriteEpisode);
+        return await _episodeRepository.ToggleFavoriteEpisodeAsync(episodeId, userId);
     }
 
     public async Task<Episode> UpdateEpisodeAsync(int id, Episode episode)
