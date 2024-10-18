@@ -13,6 +13,6 @@ public interface IEpisodeService
 
     Task<Episode> DeleteEpisodeAsync(int id);
 
-    Task<FavoriteEpisode> ToggleFavoriteEpisodeAsync(int episodeId, int userId);
+    Task<bool> ToggleFavoriteEpisodeAsync(int episodeId, int userId, FavoriteEpisode favoriteEpisode);
 }
 
