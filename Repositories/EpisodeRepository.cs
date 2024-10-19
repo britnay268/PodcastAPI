@@ -46,7 +46,7 @@ public class EpisodeRepository : IEpisodeRepository
     {
         var episodeToFavorite = await dbContext.Episodes
             .Include(e => e.UsersFavorited)
-            .SingleOrDefaultAsync(e => e.Id == userId);
+            .SingleOrDefaultAsync(e => e.Id == episodeId);
 
         if (episodeToFavorite == null)
         {
@@ -56,11 +56,11 @@ public class EpisodeRepository : IEpisodeRepository
         Console.WriteLine(episodeToFavorite.Id);
 
         // It is working back
-        var isFavorite = episodeToFavorite.UsersFavorited.Any(uf => uf.Id == episodeId);
+        var isFavorite = episodeToFavorite.UsersFavorited.Any(uf => uf.Id == userId);
 
         Console.WriteLine(isFavorite);
 
-        var user = await dbContext.Users.Include(u => u.FavoriteEpisodes).FirstOrDefaultAsync(u => u.Id == episodeId);
+        var user = await dbContext.Users.Include(u => u.FavoriteEpisodes).FirstOrDefaultAsync(u => u.Id == userId);
 
         if (user == null)
         {

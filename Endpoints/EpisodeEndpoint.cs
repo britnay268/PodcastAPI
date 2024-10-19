@@ -27,21 +27,21 @@ public static class EpisodeEndpoint
             {
                 return Results.NotFound();
             }
-            return Results.NoContent();
+            return Results.Ok($"Episode {episodeToDelete.Title} has been deleted!");
         })
         .WithOpenApi()
-            .Produces<Episode>(StatusCodes.Status204NoContent);
+        .Produces<Episode>(StatusCodes.Status204NoContent);
 
         group.MapGet("/users/{userId}/episodes/favorite", async (IEpisodeService episodeService, int userId) =>
         {
             return await episodeService.GetFavoriteEpisodesAsync(userId);
         })
-            .WithOpenApi()
-            .Produces<List<Episode>>(StatusCodes.Status200OK);
+        .WithOpenApi()
+        .Produces<List<Episode>>(StatusCodes.Status200OK);
 
         group.MapPut("/episodes/toggleFavorite", async (IEpisodeService episodeService, int episodeId, int userId) =>
         {
-            var episodeToFavorite = await episodeService.ToggleFavoriteEpisodeAsync(userId, episodeId);
+            var episodeToFavorite = await episodeService.ToggleFavoriteEpisodeAsync(episodeId, userId);
 
             if (episodeToFavorite)
             {
@@ -52,9 +52,9 @@ public static class EpisodeEndpoint
                 return Results.Ok("Episode has been favorited!");
             }
         })
-           .WithOpenApi()
-           .Produces<Episode>(StatusCodes.Status200OK)
-           .Produces(StatusCodes.Status204NoContent);
+        .WithOpenApi()
+        .Produces<Episode>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status204NoContent);
 
         group.MapPut("/episodes/{id}", async (IEpisodeService episodeService, int id, Episode episode) =>
         {
@@ -65,9 +65,9 @@ public static class EpisodeEndpoint
             }
             return Results.Ok("Episode has been updated!");
         })
-           .WithOpenApi()
-           .Produces<Episode>(StatusCodes.Status200OK)
-           .Produces(StatusCodes.Status204NoContent);
+        .WithOpenApi()
+        .Produces<Episode>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status204NoContent);
     }
 }
 
