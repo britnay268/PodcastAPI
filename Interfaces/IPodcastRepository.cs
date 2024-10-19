@@ -5,9 +5,9 @@ namespace PodcastAPI.Interfaces;
 
 public interface IPodcastRepository
 {
-    Task<List<Podcast>> GetPodcastsAsync(int userId);
+    Task<List<Podcast>> GetPodcastsAsync();
 
-    Task<Podcast> GetPodcastByIdAsync(int userId);
+    Task<Podcast> GetPodcastByIdAsync(int podcastId);
 
     Task<List<Podcast>> GetFavoritePodcastsAsync(int userId);
 
@@ -17,6 +17,6 @@ public interface IPodcastRepository
 
     Task<Podcast> DeletePodcastAsync(int id);
 
-    Task<FavoritePodcast> ToggleFavoritePodcastAsync(int podcastId, int userId);
+    Task<string> ToggleFavoritePodcastAsync(int podcastId, int userId);
 }
 
