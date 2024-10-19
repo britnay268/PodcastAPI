@@ -5,7 +5,7 @@ namespace PodcastAPI.Interfaces;
 
 public interface IEpisodeService
 {
-    Task<List<Episode>> GetFavoriteEpisodesAsync(int userId);
+    Task<List<User>> GetFavoriteEpisodesAsync(int userId);
 
     Task<Episode> CreateEpisodeAsync(Episode episode);
 
@@ -13,6 +13,6 @@ public interface IEpisodeService
 
     Task<Episode> DeleteEpisodeAsync(int id);
 
-    Task<FavoriteEpisode> ToggleFavoriteEpisodeAsync(int episodeId, int userId);
+    Task<IResult> ToggleFavoriteEpisodeAsync(int episodeId, int userId);
 }
 
