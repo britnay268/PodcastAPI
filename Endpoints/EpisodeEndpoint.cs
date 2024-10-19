@@ -34,23 +34,22 @@ public static class EpisodeEndpoint
 
         group.MapGet("/users/{userId}/episodes/favorite", async (IEpisodeService episodeService, int userId) =>
         {
-            return await episodeService.GetFavoriteEpisodesAsync(userId);
+            var newEpisode = await episodeService.GetFavoriteEpisodesAsync(userId);
+            if (newEpisode == null)
+            {
+                return Results.NotFound();
+            }
+            return Results.Ok($"Episode has been created!");
+
         })
         .WithOpenApi()
         .Produces<List<Episode>>(StatusCodes.Status200OK);
 
-        group.MapPut("/episodes/toggleFavorite", async (IEpisodeService episodeService, int episodeId, int userId) =>
+        group.MapPut("/episodes/{episodeId}/toggleFavorite/{userId}", async (IEpisodeService episodeService, int episodeId, int userId) =>
         {
             var episodeToFavorite = await episodeService.ToggleFavoriteEpisodeAsync(episodeId, userId);
 
-            if (episodeToFavorite)
-            {
-                return Results.Ok("Episode has been unfavorited!");
-            }
-            else
-            {
-                return Results.Ok("Episode has been favorited!");
-            }
+            return episodeToFavorite;
         })
         .WithOpenApi()
         .Produces<Episode>(StatusCodes.Status200OK)

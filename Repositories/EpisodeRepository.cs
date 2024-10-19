@@ -17,7 +17,24 @@ public class EpisodeRepository : IEpisodeRepository
 
     public async Task<Episode> CreateEpisodeAsync(Episode episode)
     {
-        dbContext.Episodes.Add(episode);
+        var podcastExists = dbContext.Podcasts.Any(p => p.Id == episode.PodcastId);
+
+        if (!podcastExists)
+        {
+            return null;
+        }
+
+        Episode? newEpisode = new Episode
+        {
+            Title = episode.Title,
+            Description = episode.Description,
+            Duration = episode.Duration,
+            ImageUrl = episode.ImageUrl,
+            CreatedOn = DateTime.Now,
+            PodcastId = episode.PodcastId
+        };
+
+        dbContext.Episodes.Add(newEpisode);
         await dbContext.SaveChangesAsync();
         return episode;
     }
@@ -39,10 +56,10 @@ public class EpisodeRepository : IEpisodeRepository
     public async Task<List<User>> GetFavoriteEpisodesAsync(int userId)
     {
         // To be tested
-        return await dbContext.Users.Include(u => u.FavoriteEpisodes).Where(u => u.Id == userId).ToListAsync();
+        return await dbContext.Users.Include(u => u.FavoriteEpisodes).ThenInclude(fe => fe.Podcast).Where(u => u.Id == userId).ToListAsync();
     }
 
-    public async Task<bool> ToggleFavoriteEpisodeAsync(int episodeId, int userId)
+    public async Task<IResult> ToggleFavoriteEpisodeAsync(int episodeId, int userId)
     {
         var episodeToFavorite = await dbContext.Episodes
             .Include(e => e.UsersFavorited)
@@ -50,21 +67,17 @@ public class EpisodeRepository : IEpisodeRepository
 
         if (episodeToFavorite == null)
         {
-            throw new ArgumentException("Episode does not exist.");
+            return Results.NotFound();
         }
 
-        Console.WriteLine(episodeToFavorite.Id);
-
-        // It is working back
         var isFavorite = episodeToFavorite.UsersFavorited.Any(uf => uf.Id == userId);
 
-        Console.WriteLine(isFavorite);
 
         var user = await dbContext.Users.Include(u => u.FavoriteEpisodes).FirstOrDefaultAsync(u => u.Id == userId);
 
         if (user == null)
         {
-            throw new ArgumentException("User does not exist."); // Or a custom exception
+            return Results.NotFound("User does not exist."); 
         }
 
         if (!isFavorite)
@@ -78,7 +91,7 @@ public class EpisodeRepository : IEpisodeRepository
 
         await dbContext.SaveChangesAsync();
 
-        return isFavorite;
+        return Results.Ok(isFavorite ? "Episode is unfavorited" : "Episode is favorited");
     }
 
     public async Task<Episode> UpdateEpisodeAsync(int id, Episode episode)
@@ -94,8 +107,6 @@ public class EpisodeRepository : IEpisodeRepository
         existingEpisode.Description = episode.Description ?? existingEpisode.Description;
         existingEpisode.Duration = episode.Duration != 0 ? episode.Duration : existingEpisode.Duration;
         existingEpisode.ImageUrl = episode.ImageUrl ?? existingEpisode.ImageUrl;
-        existingEpisode.CreatedOn = episode.CreatedOn != null ? episode.CreatedOn : existingEpisode.CreatedOn;
-        existingEpisode.PodcastId = episode.PodcastId != 0 ? episode.PodcastId : existingEpisode.PodcastId;
 
         await dbContext.SaveChangesAsync();
         return existingEpisode;

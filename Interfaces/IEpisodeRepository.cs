@@ -12,6 +12,6 @@ public interface IEpisodeRepository
 
 	Task<Episode> DeleteEpisodeAsync(int id);
 
-	Task<bool> ToggleFavoriteEpisodeAsync(int episodeId, int userId);
+	Task<IResult> ToggleFavoriteEpisodeAsync(int episodeId, int userId);
 }
 

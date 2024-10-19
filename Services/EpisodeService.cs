@@ -27,7 +27,7 @@ public class EpisodeService : IEpisodeService
         return await _episodeRepository.GetFavoriteEpisodesAsync(userId);
     }
 
-    public async Task<bool> ToggleFavoriteEpisodeAsync(int episodeId, int userId)
+    public async Task<IResult> ToggleFavoriteEpisodeAsync(int episodeId, int userId)
     {
         return await _episodeRepository.ToggleFavoriteEpisodeAsync(episodeId, userId);
     }
