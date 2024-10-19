@@ -14,7 +14,11 @@ public static class EpisodeEndpoint
 		group.MapPost("/episodes", async (IEpisodeService episodeService, Episode episode) =>
 		{
 			var episodeToCreate = await episodeService.CreateEpisodeAsync(episode);
-			return Results.Created($"/episodes/{episodeToCreate.Id}", episodeToCreate);
+            if (episodeToCreate == null)
+            {
+                return Results.NotFound("Podcast does not exist!");
+            }
+            return Results.Ok($"{episodeToCreate.Title} has been created!");
 		})
         .WithOpenApi()
         .Produces<Episode>(StatusCodes.Status201Created)
@@ -34,13 +38,8 @@ public static class EpisodeEndpoint
 
         group.MapGet("/users/{userId}/episodes/favorite", async (IEpisodeService episodeService, int userId) =>
         {
-            var newEpisode = await episodeService.GetFavoriteEpisodesAsync(userId);
-            if (newEpisode == null)
-            {
-                return Results.NotFound();
-            }
-            return Results.Ok($"Episode has been created!");
-
+            var favoriteEpisode = await episodeService.GetFavoriteEpisodesAsync(userId);
+            return favoriteEpisode;
         })
         .WithOpenApi()
         .Produces<List<Episode>>(StatusCodes.Status200OK);

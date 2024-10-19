@@ -36,7 +36,7 @@ public class EpisodeRepository : IEpisodeRepository
 
         dbContext.Episodes.Add(newEpisode);
         await dbContext.SaveChangesAsync();
-        return episode;
+        return newEpisode;
     }
 
     public async Task<Episode> DeleteEpisodeAsync(int id)
@@ -67,7 +67,7 @@ public class EpisodeRepository : IEpisodeRepository
 
         if (episodeToFavorite == null)
         {
-            return Results.NotFound();
+            return Results.NotFound("Episode does not exist!");
         }
 
         var isFavorite = episodeToFavorite.UsersFavorited.Any(uf => uf.Id == userId);
