@@ -27,17 +27,17 @@ namespace PodcastAPI.Services
             return await _podcastRepository.GetFavoritePodcastsAsync(userId);
         }
 
-        public async Task<Podcast> GetPodcastByIdAsync(int userId)
+        public async Task<Podcast> GetPodcastByIdAsync(int podcastId)
         {
-            return await _podcastRepository.GetPodcastByIdAsync(userId);
+            return await _podcastRepository.GetPodcastByIdAsync(podcastId);
         }
 
-        public async Task<List<Podcast>> GetPodcastsAsync(int userId)
+        public async Task<List<Podcast>> GetPodcastsAsync()
         {
-            return await _podcastRepository.GetPodcastsAsync(userId);
+            return await _podcastRepository.GetPodcastsAsync();
         }
 
-        public async Task<FavoritePodcast> ToggleFavoritePodcastAsync(int podcastId, int userId)
+        public async Task<string> ToggleFavoritePodcastAsync(int podcastId, int userId)
         {
             return await _podcastRepository.ToggleFavoritePodcastAsync(podcastId, userId);
         }
