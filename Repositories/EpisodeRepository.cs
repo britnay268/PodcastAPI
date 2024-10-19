@@ -44,25 +44,40 @@ public class EpisodeRepository : IEpisodeRepository
 
     public async Task<bool> ToggleFavoriteEpisodeAsync(int episodeId, int userId)
     {
-        var episodeToFavorite = await dbContext.Episodes.Include(e => e.UsersFavorited).SingleOrDefaultAsync(uf => uf.Id == episodeId);
+        var episodeToFavorite = await dbContext.Episodes
+            .Include(e => e.UsersFavorited)
+            .SingleOrDefaultAsync(e => e.Id == userId);
 
         if (episodeToFavorite == null)
         {
-            return false; 
+            throw new ArgumentException("Episode does not exist.");
         }
 
-        var isFavorite = episodeToFavorite.UsersFavorited.Any(uf => uf.Id == userId);
+        Console.WriteLine(episodeToFavorite.Id);
+
+        // It is working back
+        var isFavorite = episodeToFavorite.UsersFavorited.Any(uf => uf.Id == episodeId);
+
+        Console.WriteLine(isFavorite);
+
+        var user = await dbContext.Users.Include(u => u.FavoriteEpisodes).FirstOrDefaultAsync(u => u.Id == episodeId);
+
+        if (user == null)
+        {
+            throw new ArgumentException("User does not exist."); // Or a custom exception
+        }
 
         if (!isFavorite)
         {
-            episodeToFavorite.UsersFavorited.Add(dbContext.Users.Find(userId));
+            episodeToFavorite.UsersFavorited.Add(user);
         }
         else
         {
-            episodeToFavorite.UsersFavorited.Remove(dbContext.Users.Find(userId));
+            episodeToFavorite.UsersFavorited.Remove(user);
         }
 
         await dbContext.SaveChangesAsync();
+
         return isFavorite;
     }
 

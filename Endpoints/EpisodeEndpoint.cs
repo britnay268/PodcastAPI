@@ -45,11 +45,11 @@ public static class EpisodeEndpoint
 
             if (episodeToFavorite)
             {
-                return Results.Ok("Episode has been favorited!");
+                return Results.Ok("Episode has been unfavorited!");
             }
             else
             {
-                return Results.Ok("Episode has been unfavorited!");
+                return Results.Ok("Episode has been favorited!");
             }
         })
            .WithOpenApi()
