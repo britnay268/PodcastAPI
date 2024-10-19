@@ -88,7 +88,7 @@ public class PodcastRepository : IPodcastRepository
         {
             dbContext.FavoritePodcasts.Remove(favoritePodcast);
         }
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync();
         return returnMessage;
     }
 

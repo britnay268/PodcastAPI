@@ -113,7 +113,7 @@ public static class PodcastEndpoint
         .Produces<Podcast>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status404NotFound);
 
-        group.MapPut("/podcasts/{podcastId}/toggle-favorite/{userId}", async (IPodcastService podcastService, int podcastId, int userId) =>
+        group.MapPut("/podcasts/{podcastId}/toggleFavorite/{userId}", async (IPodcastService podcastService, int podcastId, int userId) =>
         {
             string taskResponse = await podcastService.ToggleFavoritePodcastAsync(podcastId, userId);
 
