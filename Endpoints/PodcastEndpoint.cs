@@ -40,7 +40,7 @@ public static class PodcastEndpoint
         .WithOpenApi()
         .Produces<List<Podcast>>(StatusCodes.Status200OK);
 
-        group.MapGet("/podcasts/favorites/{podcastId}", async (IPodcastService podcastService, int userId) =>
+        group.MapGet("/podcasts/favorites/{userId}", async (IPodcastService podcastService, int userId) =>
         {
             var podcasts = await podcastService.GetFavoritePodcastsAsync(userId);
             return Results.Ok(podcasts.Select(p => new
