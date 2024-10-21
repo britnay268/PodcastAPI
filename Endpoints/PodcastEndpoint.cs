@@ -63,7 +63,8 @@ public static class PodcastEndpoint
                     p.User.LastName,
                     p.User.ImageUrl
                 },
-                EpisodeCount = p.Episodes.Count
+                EpisodeCount = p.Episodes.Count,
+                Favorited = p.UsersFavorited.Any(uf => uf.Id == userId)
             }));
         })
         .WithOpenApi()
