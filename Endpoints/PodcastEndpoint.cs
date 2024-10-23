@@ -34,7 +34,7 @@ public static class PodcastEndpoint
                     p.User.ImageUrl
                 },
                 EpisodeCount = p.Episodes.Count,
-                Favorited = p.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
             }));
         })
         .WithOpenApi()
@@ -64,7 +64,7 @@ public static class PodcastEndpoint
                     p.User.ImageUrl
                 },
                 EpisodeCount = p.Episodes.Count,
-                Favorited = p.UsersFavorited.Any(uf => uf.Id == userId)
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userId)
             }));
         })
         .WithOpenApi()
@@ -107,7 +107,7 @@ public static class PodcastEndpoint
                     e.CreatedOn,
                     Favorited = e.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
                 }),
-                Favorited = podcast.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
+                Favorite = podcast.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
             });
         })
         .WithOpenApi()
