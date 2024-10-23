@@ -3,6 +3,7 @@ using PodcastAPI.Interfaces;
 using PodcastAPI.Data;
 using PodcastAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using PodcastAPI.DTOs;
 
 namespace PodcastAPI.Repositories;
 
@@ -15,9 +16,15 @@ public class EpisodeRepository : IEpisodeRepository
 		dbContext = context;
 	}
 
-    public async Task<Episode> CreateEpisodeAsync(Episode episode)
+    public async Task<Episode?> GetSingleEpisode(int episodeId)
     {
-        var podcastExists = dbContext.Podcasts.Any(p => p.Id == episode.PodcastId);
+        return await dbContext.Episodes
+            .Include(e => e.UsersFavorited)
+            .SingleOrDefaultAsync(e => e.Id == episodeId);
+    }
+    public async Task<Episode?> CreateEpisodeAsync(EpisodeSubmitDTO episodeSubmit)
+    {
+        var podcastExists = dbContext.Podcasts.Any(p => p.Id == episodeSubmit.PodcastId);
 
         if (!podcastExists)
         {
@@ -26,12 +33,12 @@ public class EpisodeRepository : IEpisodeRepository
 
         Episode? newEpisode = new Episode
         {
-            Title = episode.Title,
-            Description = episode.Description,
-            Duration = episode.Duration,
-            ImageUrl = episode.ImageUrl,
+            Title = episodeSubmit.Title,
+            Description = episodeSubmit.Description,
+            Duration = episodeSubmit.Duration,
+            ImageUrl = episodeSubmit.ImageUrl,
             CreatedOn = DateTime.Now,
-            PodcastId = episode.PodcastId
+            PodcastId = episodeSubmit.PodcastId
         };
 
         dbContext.Episodes.Add(newEpisode);
@@ -94,19 +101,19 @@ public class EpisodeRepository : IEpisodeRepository
         return Results.Ok(isFavorite ? "Episode is unfavorited" : "Episode is favorited");
     }
 
-    public async Task<Episode> UpdateEpisodeAsync(int id, Episode episode)
+    public async Task<Episode?> UpdateEpisodeAsync(int id, EpisodeSubmitDTO episodeSubmit)
     {
-        var existingEpisode = await dbContext.Episodes.FindAsync(id);
+        var existingEpisode = await dbContext.Episodes.Include(e => e.UsersFavorited).SingleOrDefaultAsync(e => e.Id == id);
 
         if (existingEpisode == null)
         {
             return null;
         }
 
-        existingEpisode.Title = episode.Title ?? existingEpisode.Title;
-        existingEpisode.Description = episode.Description ?? existingEpisode.Description;
-        existingEpisode.Duration = episode.Duration != 0 ? episode.Duration : existingEpisode.Duration;
-        existingEpisode.ImageUrl = episode.ImageUrl ?? existingEpisode.ImageUrl;
+        existingEpisode.Title = episodeSubmit.Title ?? existingEpisode.Title;
+        existingEpisode.Description = episodeSubmit.Description ?? existingEpisode.Description;
+        existingEpisode.Duration = episodeSubmit.Duration != 0 ? episodeSubmit.Duration : existingEpisode.Duration;
+        existingEpisode.ImageUrl = episodeSubmit.ImageUrl ?? existingEpisode.ImageUrl;
 
         await dbContext.SaveChangesAsync();
         return existingEpisode;
