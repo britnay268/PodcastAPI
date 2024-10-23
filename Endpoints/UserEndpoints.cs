@@ -11,9 +11,9 @@ public static class UserEndpoints
     {
         var group = routes.MapGroup("").WithTags(nameof(User));
 
-        group.MapPost("/checkuser", (PodcastAPIDbContext db, User userToCheck) =>
+        group.MapPost("/checkuser", (PodcastAPIDbContext db, string uid) =>
         {
-            User? user = db.Users.FirstOrDefault(u => u.Uid == userToCheck.Uid);
+            User? user = db.Users.FirstOrDefault(u => u.Uid == uid);
 
             if (user == null)
             {
