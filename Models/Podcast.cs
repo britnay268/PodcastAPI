@@ -12,8 +12,9 @@ namespace PodcastAPI.Models
         public DateTime CreatedOn { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public int GenreId { get; set; }
+        public Genre Genre { get; set; }
         public List<Episode> Episodes { get; set; }
-        public List<Genre> Genres { get; set; }
         public List<User> UsersFavorited { get; set; }
     }
 }

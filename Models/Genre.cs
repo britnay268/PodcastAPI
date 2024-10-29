@@ -5,7 +5,6 @@ namespace PodcastAPI.Models
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public List<Podcast> Podcasts { get; set; }
 	}
 }
 

@@ -20,11 +20,7 @@ public static class PodcastEndpoint
                 p.Description,
                 p.ImageUrl,
                 p.CreatedOn,
-                Genres = p.Genres.Select(g => new
-                {
-                    g.Id,
-                    g.Name,
-                }),
+                p.Genre,
                 User = new
                 {
                     p.User.Id,
@@ -50,11 +46,7 @@ public static class PodcastEndpoint
                 p.Description,
                 p.ImageUrl,
                 p.CreatedOn,
-                Genres = p.Genres.Select(g => new
-                {
-                    g.Id,
-                    g.Name,
-                }),
+                p.Genre,
                 User = new
                 {
                     p.User.Id,
@@ -84,11 +76,7 @@ public static class PodcastEndpoint
                 podcast.Description,
                 podcast.ImageUrl,
                 podcast.CreatedOn,
-                Genres = podcast.Genres.Select(g => new
-                {
-                    g.Id,
-                    g.Name,
-                }),
+                podcast.Genre,
                 User = new
                 {
                     podcast.User.Id,

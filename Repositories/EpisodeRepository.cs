@@ -63,7 +63,10 @@ public class EpisodeRepository : IEpisodeRepository
     public async Task<List<User>> GetFavoriteEpisodesAsync(int userId)
     {
         // To be tested
-        return await dbContext.Users.Include(u => u.FavoriteEpisodes).ThenInclude(fe => fe.Podcast).Where(u => u.Id == userId).ToListAsync();
+        return await dbContext.Users.Include(u => u.FavoriteEpisodes)
+            .ThenInclude(fe => fe.Podcast)
+            .ThenInclude(p => p.Genre)
+            .Where(u => u.Id == userId).ToListAsync();
     }
 
     public async Task<IResult> ToggleFavoriteEpisodeAsync(int episodeId, int userId)

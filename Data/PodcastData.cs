@@ -13,7 +13,8 @@ public class PodcastData
             Description = "Dive into intriguing unsolved mysteries and explore the stories behind them.",
             ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcE9K4DhKIoRe3InWlLAZ_kn1OtDtFXOjvPQ&s",
             CreatedOn = new DateTime(2023, 04, 14),
-            UserId = 1
+            UserId = 1,
+            GenreId = 7
         },
         new()
         {
@@ -22,7 +23,8 @@ public class PodcastData
             Description = "A comedic take on life’s lessons, featuring funny anecdotes and insightful interviews.",
             ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZRw85bJb4AyflJ3CYLIEK_Wmv3Aj0Fe0Ubw&s",
             CreatedOn = new DateTime(2010, 03, 20),
-            UserId = 4
+            UserId = 4,
+            GenreId = 2
         },
         new()
         {
@@ -31,7 +33,8 @@ public class PodcastData
             Description = "Journey around the globe with travelers sharing their adventures and travel tips.",
             ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9991LNdmmk7rx9mQl7TeZuEHRXADOvD73A7V_TqljXbajmcMWn6cb0k1tBcSnTbEXAe0&usqp=CAU",
             CreatedOn = new DateTime(2024, 08, 01),
-            UserId = 3
+            UserId = 3,
+            GenreId = 7
         },
         new()
         {
@@ -40,7 +43,8 @@ public class PodcastData
             Description = "Explore the fascinating intersection of science and human behavior, uncovering what makes us tick.",
             ImageUrl = "https://plus.unsplash.com/premium_photo-1664195074951-fe91ec456eed?fm=jpg&q=60&w=3000[…]M3wxMjA3fDB8MHxzZWFyY2h8MXx8cG9kY2FzdHxlbnwwfHwwfHx8MA%3D%3D",
             CreatedOn = new DateTime(2020, 09, 15),
-            UserId = 2
+            UserId = 2,
+            GenreId = 9
         },
         new()
         {
@@ -49,7 +53,8 @@ public class PodcastData
             Description = "She wanted more than one podcast, so she got it.",
             ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZRw85bJb4AyflJ3CYLIEK_Wmv3Aj0Fe0Ubw&s",
             CreatedOn = new DateTime(2024, 10, 12),
-            UserId = 4
+            UserId = 4,
+            GenreId = 7
         }
     };
 }
