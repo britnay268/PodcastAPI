@@ -11,7 +11,6 @@ public class PodcastAPIDbContext : DbContext
     public DbSet<FavoriteEpisode> FavoriteEpisodes { get; set; }
     public DbSet<FavoritePodcast> FavoritePodcasts { get; set; }
     public DbSet<Genre> Genres { get; set; }
-    public DbSet<PodcastGenre> PodcastGenres { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<ShowdownResult> ShowdownResults { get; set; }
 
@@ -32,11 +31,6 @@ public class PodcastAPIDbContext : DbContext
             .WithMany(p => p.UsersFavorited)
             .UsingEntity<FavoritePodcast>();
 
-        modelBuilder.Entity<Genre>()
-            .HasMany(g => g.Podcasts)
-            .WithMany(p => p.Genres)
-            .UsingEntity<PodcastGenre>();
-
         modelBuilder.Entity<Podcast>()
             .HasOne(p => p.User)
             .WithMany(u => u.Podcasts)
@@ -48,7 +42,6 @@ public class PodcastAPIDbContext : DbContext
         modelBuilder.Entity<FavoritePodcast>().HasData(FavoritePodcastData.FavoritePodcasts);
         modelBuilder.Entity<Genre>().HasData(GenreData.Genres);
         modelBuilder.Entity<Podcast>().HasData(PodcastData.Podcasts);
-        modelBuilder.Entity<PodcastGenre>().HasData(PodcastGenreData.PodcastGenres);
         modelBuilder.Entity<ShowdownResult>().HasData(ShowdownResultsData.ShowdownResults);
         modelBuilder.Entity<User>().HasData(UserData.Users);
     }

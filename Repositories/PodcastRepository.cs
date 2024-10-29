@@ -30,7 +30,7 @@ public class PodcastRepository : IPodcastRepository
         return await dbContext.Podcasts
             .Where(p => p.UsersFavorited.Any(uf => uf.Id == userId))
             .Include(p => p.User)
-            .Include(p => p.Genres)
+            .Include(p => p.Genre)
             .Include(p => p.Episodes)
             .Include(p => p.UsersFavorited)
             .OrderBy(p => p.Title)
@@ -41,7 +41,7 @@ public class PodcastRepository : IPodcastRepository
     {
         return await dbContext.Podcasts
             .Include(p => p.User)
-            .Include(p => p.Genres)
+            .Include(p => p.Genre)
             .Include(p => p.Episodes.OrderBy(e => e.CreatedOn))
             .ThenInclude(e => e.UsersFavorited)
             .Include(p => p.UsersFavorited)
@@ -52,7 +52,7 @@ public class PodcastRepository : IPodcastRepository
     {
         return await dbContext.Podcasts
             .Include(p => p.User)
-            .Include(p => p.Genres)
+            .Include(p => p.Genre)
             .Include(p => p.Episodes)
             .Include(p => p.UsersFavorited)
             .OrderBy(p => p.Title)
