@@ -117,6 +117,67 @@ public static class PodcastEndpoint
         .Produces(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status404NotFound);
 
+        group.MapGet("/podcasts/search", async (IPodcastService podcastService, string searchInput, int userFavoritesId) =>
+        {
+            List<Podcast> podcasts = await podcastService.SearchPodcastbyTItle(searchInput);
+            if (podcasts.Count is 0)
+            {
+                return Results.Ok($"{searchInput} is not found!");
+            }
+
+            return Results.Ok(podcasts.Select(p => new
+            {
+                p.Id,
+                p.Title,
+                p.Description,
+                p.ImageUrl,
+                p.CreatedOn,
+                p.Genre,
+                User = new
+                {
+                    p.User.Id,
+                    p.User.Username,
+                    p.User.FirstName,
+                    p.User.LastName,
+                    p.User.ImageUrl
+                },
+                EpisodeCount = p.Episodes.Count,
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
+            }));
+        })
+        .WithOpenApi()
+        .Produces<List<Podcast>>(StatusCodes.Status200OK);
+
+        group.MapGet("/podcasts/favorites/{userId}/search", async (IPodcastService podcastService, string searchInput, int userId) =>
+        {
+            List<Podcast> podcasts = await podcastService.SearchFavoritePodcastbyTItle(searchInput, userId);
+            if (podcasts.Count is 0)
+            {
+                return Results.Ok($"{searchInput} is not found!");
+            }
+
+            return Results.Ok(podcasts.Select(p => new
+            {
+                p.Id,
+                p.Title,
+                p.Description,
+                p.ImageUrl,
+                p.CreatedOn,
+                p.Genre,
+                User = new
+                {
+                    p.User.Id,
+                    p.User.Username,
+                    p.User.FirstName,
+                    p.User.LastName,
+                    p.User.ImageUrl
+                },
+                EpisodeCount = p.Episodes.Count,
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userId)
+            }));
+        })
+        .WithOpenApi()
+        .Produces<List<Podcast>>(StatusCodes.Status200OK);
         group.MapPost("/podcasts", async (IPodcastService podcastService, PodcastSubmitDTO podcastSubmit) =>
         {
             var addPodcast = await podcastService.CreatePodcastAsync(podcastSubmit);

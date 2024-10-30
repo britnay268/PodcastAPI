@@ -47,6 +47,16 @@ namespace PodcastAPI.Services
         {
             return await _podcastRepository.UpdatePodcastAsync(id, podcastSubmit);
         }
+
+        public async Task<List<Podcast>> SearchPodcastbyTItle(string searchInput)
+        {
+            return await _podcastRepository.SearchPodcastbyTItle(searchInput);
+        }
+
+        public async Task<List<Podcast>> SearchFavoritePodcastbyTItle(string searchInput, int userId)
+        {
+            return await _podcastRepository.SearchFavoritePodcastbyTItle(searchInput, userId);
+        }
     }
 }
 

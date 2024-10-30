@@ -155,5 +155,44 @@ public class PodcastRepository : IPodcastRepository
         await dbContext.SaveChangesAsync();
         return existingPodcast;
     }
+
+    public async Task<List<Podcast>> SearchPodcastbyTItle(string searchInput)
+    { 
+        if (string.IsNullOrEmpty(searchInput))
+        {
+            return null;
+        }
+
+        var searchResults = await dbContext.Podcasts
+            .Where(p => p.Title.ToLower().Contains(searchInput.ToLower()))
+            .Include(p => p.User)
+            .Include(p => p.Genre)
+            .Include(p => p.Episodes)
+            .Include(p => p.UsersFavorited)
+            .OrderBy(p => p.Title)
+            .ToListAsync();
+
+
+        return searchResults;
+    }
+
+    public async Task<List<Podcast>> SearchFavoritePodcastbyTItle(string searchInput, int userId)
+    { 
+        if (string.IsNullOrEmpty(searchInput))
+        {
+            return null;
+        }
+
+        var searchResults = await dbContext.Podcasts
+            .Where(p => p.UsersFavorited.Any(uf => uf.Id == userId) && p.Title.ToLower().Contains(searchInput.ToLower()))
+            .Include(p => p.User)
+            .Include(p => p.Genre)
+            .Include(p => p.Episodes)
+            .Include(p => p.UsersFavorited)
+            .OrderBy(p => p.Title)
+            .ToListAsync();
+
+        return searchResults;
+    }
 }
 
