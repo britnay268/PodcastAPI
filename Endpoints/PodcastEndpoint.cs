@@ -115,6 +115,32 @@ public static class PodcastEndpoint
         .WithOpenApi()
         .Produces(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status404NotFound);
+
+        group.MapGet("/podcast/search", async (IPodcastService podcastService, string searchInput, int userFavoritesId) =>
+        {
+            var podcasts = await podcastService.SearchPodcastbyTItle(searchInput);
+            return Results.Ok(podcasts.Select(p => new
+            {
+                p.Id,
+                p.Title,
+                p.Description,
+                p.ImageUrl,
+                p.CreatedOn,
+                p.Genre,
+                User = new
+                {
+                    p.User.Id,
+                    p.User.Username,
+                    p.User.FirstName,
+                    p.User.LastName,
+                    p.User.ImageUrl
+                },
+                EpisodeCount = p.Episodes.Count,
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
+            }));
+        })
+        .WithOpenApi()
+        .Produces<List<Podcast>>(StatusCodes.Status200OK);
     }
 }
 

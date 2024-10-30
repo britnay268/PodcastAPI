@@ -96,5 +96,32 @@ public class PodcastRepository : IPodcastRepository
     {
         throw new NotImplementedException();
     }
+
+    public async Task<List<Podcast>> SearchPodcastbyTItle(string searchInput)
+    {
+        searchInput = searchInput.ToLower();
+
+        if (string.IsNullOrEmpty(searchInput))
+        {
+            return null;
+        }
+
+        var searchResults = await dbContext.Podcasts
+            .Where(p => p.Title.ToLower().Contains(searchInput))
+            .Include(p => p.User)
+            .Include(p => p.Genre)
+            .Include(p => p.Episodes)
+            .Include(p => p.UsersFavorited)
+            .OrderBy(p => p.Title)
+            .ToListAsync();
+
+
+        return searchResults;
+    }
+
+    public async Task<string> SearchFavoritePodcastbyTItle(string searchInput)
+    {
+        throw new NotImplementedException();
+    }
 }
 

@@ -18,5 +18,9 @@ public interface IPodcastService
     Task<Podcast> DeletePodcastAsync(int id);
 
     Task<string> ToggleFavoritePodcastAsync(int podcastId, int userId);
+
+    Task<List<Podcast>> SearchPodcastbyTItle(string searchInput);
+
+    Task<string> SearchFavoritePodcastbyTItle(string searchInput);
 }
 
