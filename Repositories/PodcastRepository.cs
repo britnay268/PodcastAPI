@@ -142,14 +142,14 @@ public class PodcastRepository : IPodcastRepository
 
         var existingGenre = await dbContext.Genres.SingleOrDefaultAsync(g => g.Id == podcastSubmit.GenreId);
 
-        if (existingGenre == null)
+        if (existingGenre == null && podcastSubmit.GenreId != 0)
         {
             return new Podcast { GenreId = -1 };
         }
 
         existingPodcast.Title = podcastSubmit.Title ?? existingPodcast.Title;
         existingPodcast.Description = podcastSubmit.Description ?? existingPodcast.Description;
-        existingPodcast.GenreId = podcastSubmit.GenreId;
+        existingPodcast.GenreId = podcastSubmit.GenreId != 0 ? podcastSubmit.GenreId : existingPodcast.GenreId;
         existingPodcast.ImageUrl = podcastSubmit.ImageUrl ?? existingPodcast.ImageUrl;
 
         await dbContext.SaveChangesAsync();
