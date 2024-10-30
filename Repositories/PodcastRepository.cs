@@ -98,16 +98,14 @@ public class PodcastRepository : IPodcastRepository
     }
 
     public async Task<List<Podcast>> SearchPodcastbyTItle(string searchInput)
-    {
-        searchInput = searchInput.ToLower();
-
+    { 
         if (string.IsNullOrEmpty(searchInput))
         {
             return null;
         }
 
         var searchResults = await dbContext.Podcasts
-            .Where(p => p.Title.ToLower().Contains(searchInput))
+            .Where(p => p.Title.ToLower().Contains(searchInput.ToLower()))
             .Include(p => p.User)
             .Include(p => p.Genre)
             .Include(p => p.Episodes)
@@ -120,16 +118,14 @@ public class PodcastRepository : IPodcastRepository
     }
 
     public async Task<List<Podcast>> SearchFavoritePodcastbyTItle(string searchInput, int userId)
-    {
-        searchInput = searchInput.ToLower();
-
+    { 
         if (string.IsNullOrEmpty(searchInput))
         {
             return null;
         }
 
         var searchResults = await dbContext.Podcasts
-            .Where(p => p.UsersFavorited.Any(uf => uf.Id == userId) && p.Title.ToLower().Contains(searchInput))
+            .Where(p => p.UsersFavorited.Any(uf => uf.Id == userId) && p.Title.ToLower().Contains(searchInput.ToLower()))
             .Include(p => p.User)
             .Include(p => p.Genre)
             .Include(p => p.Episodes)
