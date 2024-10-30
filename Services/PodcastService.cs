@@ -1,6 +1,7 @@
 ﻿using System;
 using PodcastAPI.Interfaces;
 using PodcastAPI.Models;
+using PodcastAPI.DTOs;
 namespace PodcastAPI.Services
 {
     public class PodcastService : IPodcastService
@@ -12,9 +13,9 @@ namespace PodcastAPI.Services
             _podcastRepository = podcastRepository;
         }
 
-        public async Task<Podcast> CreatePodcastAsync(Podcast podcast)
+        public async Task<Podcast> CreatePodcastAsync(PodcastSubmitDTO podcastSubmit)
         {
-            return await _podcastRepository.CreatePodcastAsync(podcast);
+            return await _podcastRepository.CreatePodcastAsync(podcastSubmit);
         }
 
         public async Task<Podcast> DeletePodcastAsync(int id)
@@ -42,9 +43,9 @@ namespace PodcastAPI.Services
             return await _podcastRepository.ToggleFavoritePodcastAsync(podcastId, userId);
         }
 
-        public async Task<Podcast> UpdatePodcastAsync(int id, Podcast podcast)
+        public async Task<Podcast> UpdatePodcastAsync(int id, PodcastSubmitDTO podcastSubmit)
         {
-            return await _podcastRepository.UpdatePodcastAsync(id, podcast);
+            return await _podcastRepository.UpdatePodcastAsync(id, podcastSubmit);
         }
     }
 }

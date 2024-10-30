@@ -2,6 +2,7 @@
 using PodcastAPI.Interfaces;
 using PodcastAPI.Data;
 using PodcastAPI.Models;
+using PodcastAPI.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace PodcastAPI.Repositories;
@@ -15,14 +16,49 @@ public class PodcastRepository : IPodcastRepository
         dbContext = context;
     }
 
-    public async Task<Podcast> CreatePodcastAsync(Podcast podcast)
+    public async Task<Podcast> CreatePodcastAsync(PodcastSubmitDTO podcastSubmit)
     {
-        throw new NotImplementedException();
+        var genreExists = dbContext.Genres.Any(g => g.Id == podcastSubmit.GenreId);
+
+        if (!genreExists)
+        {
+            return new Podcast { GenreId = -1 };
+        }
+
+        var userExists = dbContext.Users.Any(u => u.Id == podcastSubmit.UserId);
+
+        if (!userExists)
+        {
+            return new Podcast { UserId = -1 };
+        }
+
+        Podcast? newPodcast = new Podcast
+        {
+            Title = podcastSubmit.Title,
+            Description = podcastSubmit.Description,
+            ImageUrl = podcastSubmit.ImageUrl,
+            CreatedOn = DateTime.Now,
+            UserId = podcastSubmit.UserId,
+            GenreId = podcastSubmit.GenreId
+        };
+
+        dbContext.Podcasts.Add(newPodcast);
+        await dbContext.SaveChangesAsync();
+        return newPodcast;
     }
 
     public async Task<Podcast> DeletePodcastAsync(int id)
     {
-        throw new NotImplementedException();
+        var podcastToDelete = await dbContext.Podcasts.SingleOrDefaultAsync(p => p.Id == id);
+        if (podcastToDelete == null)
+        {
+            return null;
+        }
+
+        dbContext.Podcasts.Remove(podcastToDelete);
+        await dbContext.SaveChangesAsync();
+
+        return podcastToDelete;
     }
 
     public async Task<List<Podcast>> GetFavoritePodcastsAsync(int userId)
@@ -92,9 +128,32 @@ public class PodcastRepository : IPodcastRepository
         return returnMessage;
     }
 
-    public async Task<Podcast> UpdatePodcastAsync(int id, Podcast podcast)
+    public async Task<Podcast?> UpdatePodcastAsync(int id, PodcastSubmitDTO podcastSubmit)
     {
-        throw new NotImplementedException();
+        var existingPodcast = await dbContext.Podcasts
+            .Include(p => p.Episodes)
+            .Include(p => p.Genre)
+            .SingleOrDefaultAsync(e => e.Id == id);
+
+        if (existingPodcast == null)
+        {
+            return null;
+        }
+
+        var existingGenre = await dbContext.Genres.SingleOrDefaultAsync(g => g.Id == podcastSubmit.GenreId);
+
+        if (existingGenre == null)
+        {
+            return new Podcast { GenreId = -1 };
+        }
+
+        existingPodcast.Title = podcastSubmit.Title ?? existingPodcast.Title;
+        existingPodcast.Description = podcastSubmit.Description ?? existingPodcast.Description;
+        existingPodcast.GenreId = podcastSubmit.GenreId;
+        existingPodcast.ImageUrl = podcastSubmit.ImageUrl ?? existingPodcast.ImageUrl;
+
+        await dbContext.SaveChangesAsync();
+        return existingPodcast;
     }
 }
 
