@@ -1,5 +1,6 @@
 ﻿using System;
 using PodcastAPI.Models;
+using PodcastAPI.DTOs;
 
 namespace PodcastAPI.Interfaces;
 
@@ -11,9 +12,9 @@ public interface IPodcastService
 
     Task<List<Podcast>> GetFavoritePodcastsAsync(int userId);
 
-    Task<Podcast> CreatePodcastAsync(Podcast podcast);
+    Task<Podcast> CreatePodcastAsync(PodcastSubmitDTO podcastSubmit);
 
-    Task<Podcast> UpdatePodcastAsync(int id, Podcast podcast);
+    Task<Podcast> UpdatePodcastAsync(int id, PodcastSubmitDTO podcastSubmit);
 
     Task<Podcast> DeletePodcastAsync(int id);
 
