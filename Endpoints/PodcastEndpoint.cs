@@ -1,6 +1,7 @@
 ﻿using System;
 using PodcastAPI.Models;
 using PodcastAPI.Interfaces;
+using PodcastAPI.DTOs;
 
 namespace PodcastAPI.Endpoints;
 
@@ -114,6 +115,65 @@ public static class PodcastEndpoint
         })
         .WithOpenApi()
         .Produces(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status404NotFound);
+
+        group.MapPost("/podcasts", async (IPodcastService podcastService, PodcastSubmitDTO podcastSubmit) =>
+        {
+            var addPodcast = await podcastService.CreatePodcastAsync(podcastSubmit);
+
+            if (addPodcast.GenreId == -1)
+            {
+                return Results.NotFound("Invalid Genre Id");
+            }
+            if (addPodcast.UserId == -1)
+            {
+                return Results.NotFound("Invalid User Id");
+            }
+
+            return Results.Created($"/podcast/{addPodcast.Id}", addPodcast);
+        })
+        .WithOpenApi()
+        .Produces<Podcast>(StatusCodes.Status201Created)
+        .Produces(StatusCodes.Status404NotFound);
+
+        // Add comment
+        group.MapPut("/podcasts/{podcastId}", async (IPodcastService podcastService, int podcastId, PodcastSubmitDTO podcastSubmit) =>
+        {
+            if (podcastSubmit.Id != podcastId)
+            {
+                return Results.BadRequest("Podcast Id in URI does not match Id in payload.");
+            }
+
+            var updatedPodcast = await podcastService.UpdatePodcastAsync(podcastId, podcastSubmit);
+
+            if (updatedPodcast == null)
+            {
+                return Results.NotFound("Invalid Podcast Id");
+            }
+            if (updatedPodcast.GenreId == -1)
+            {
+                return Results.NotFound("Invalid Genre Id");
+            }
+
+            return Results.Ok(updatedPodcast);
+        })
+        .WithOpenApi()
+        .Produces<Podcast>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status400BadRequest)
+        .Produces(StatusCodes.Status404NotFound);
+
+        group.MapDelete("/podcasts/{podcastId}", async (IPodcastService podcastService, int podcastId) =>
+        {
+            var removePodcast = await podcastService.DeletePodcastAsync(podcastId);
+            if (removePodcast == null)
+            {
+                return Results.NotFound("Invalid Podcast Id");
+            }
+
+            return Results.NoContent();
+        })
+        .WithOpenApi()
+        .Produces(StatusCodes.Status204NoContent)
         .Produces(StatusCodes.Status404NotFound);
     }
 }
