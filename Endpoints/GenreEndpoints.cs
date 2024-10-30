@@ -20,7 +20,7 @@ namespace PodcastAPI.Endpoints
                 });
             });
 
-            group.MapGet("/podcast/genre/{genreId}", async (PodcastAPIDbContext db, int genreId, int userFavoritesId) =>
+            group.MapGet("/podcasts/genre/{genreId}", async (PodcastAPIDbContext db, int genreId, int userFavoritesId) =>
             {
                 var podcastByGenre = await db.Podcasts
                     .Where(p => p.GenreId == genreId)

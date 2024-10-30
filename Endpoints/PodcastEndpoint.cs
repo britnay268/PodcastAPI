@@ -117,9 +117,14 @@ public static class PodcastEndpoint
         .Produces(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status404NotFound);
 
-        group.MapGet("/podcast/search", async (IPodcastService podcastService, string searchInput, int userFavoritesId) =>
+        group.MapGet("/podcasts/search", async (IPodcastService podcastService, string searchInput, int userFavoritesId) =>
         {
-            var podcasts = await podcastService.SearchPodcastbyTItle(searchInput);
+            List<Podcast> podcasts = await podcastService.SearchPodcastbyTItle(searchInput);
+            if (podcasts.Count is 0)
+            {
+                return Results.Ok($"{searchInput} is not found!");
+            }
+
             return Results.Ok(podcasts.Select(p => new
             {
                 p.Id,
@@ -145,7 +150,12 @@ public static class PodcastEndpoint
 
         group.MapGet("/podcasts/favorites/{userId}/search", async (IPodcastService podcastService, string searchInput, int userId) =>
         {
-            var podcasts = await podcastService.SearchFavoritePodcastbyTItle(searchInput, userId);
+            List<Podcast> podcasts = await podcastService.SearchFavoritePodcastbyTItle(searchInput, userId);
+            if (podcasts.Count is 0)
+            {
+                return Results.Ok($"{searchInput} is not found!");
+            }
+
             return Results.Ok(podcasts.Select(p => new
             {
                 p.Id,
