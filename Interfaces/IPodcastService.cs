@@ -21,6 +21,6 @@ public interface IPodcastService
 
     Task<List<Podcast>> SearchPodcastbyTItle(string searchInput);
 
-    Task<string> SearchFavoritePodcastbyTItle(string searchInput);
+    Task<List<Podcast>> SearchFavoritePodcastbyTItle(string searchInput, int userId);
 }
 

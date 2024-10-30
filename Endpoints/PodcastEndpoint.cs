@@ -141,6 +141,32 @@ public static class PodcastEndpoint
         })
         .WithOpenApi()
         .Produces<List<Podcast>>(StatusCodes.Status200OK);
+
+        group.MapGet("/podcasts/favorites/{userId}/search", async (IPodcastService podcastService, string searchInput, int userId) =>
+        {
+            var podcasts = await podcastService.SearchFavoritePodcastbyTItle(searchInput, userId);
+            return Results.Ok(podcasts.Select(p => new
+            {
+                p.Id,
+                p.Title,
+                p.Description,
+                p.ImageUrl,
+                p.CreatedOn,
+                p.Genre,
+                User = new
+                {
+                    p.User.Id,
+                    p.User.Username,
+                    p.User.FirstName,
+                    p.User.LastName,
+                    p.User.ImageUrl
+                },
+                EpisodeCount = p.Episodes.Count,
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userId)
+            }));
+        })
+        .WithOpenApi()
+        .Produces<List<Podcast>>(StatusCodes.Status200OK);
     }
 }
 

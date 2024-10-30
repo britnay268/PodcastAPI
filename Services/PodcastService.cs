@@ -52,9 +52,9 @@ namespace PodcastAPI.Services
             return await _podcastRepository.SearchPodcastbyTItle(searchInput);
         }
 
-        public async Task<string> SearchFavoritePodcastbyTItle(string searchInput)
+        public async Task<List<Podcast>> SearchFavoritePodcastbyTItle(string searchInput, int userId)
         {
-            return await _podcastRepository.SearchFavoritePodcastbyTItle(searchInput);
+            return await _podcastRepository.SearchFavoritePodcastbyTItle(searchInput, userId);
         }
     }
 }
