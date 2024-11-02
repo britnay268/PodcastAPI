@@ -8,8 +8,8 @@ namespace PodcastAPI.Endpoints;
 
 public static class ShowdownEndpoints
 {
-	public static void MapShowdownEndpoints(this IEndpointRouteBuilder routes)
-	{
+    public static void MapShowdownEndpoints(this IEndpointRouteBuilder routes)
+    {
         var group = routes.MapGroup("").WithTags(nameof(ShowdownResult));
 
         group.MapPost("/showdown", (PodcastAPIDbContext db, ShowdownResult showdownResult) =>
@@ -73,8 +73,67 @@ public static class ShowdownEndpoints
                 return Results.NotFound("UserId is not valid!");
             }
 
-            return Results.Ok();
+            List<int> totalPodcasts = db.Podcasts.Where(p => p.GenreId == genreId).Select(p => p.Id).ToList();
+
+
+            if (totalPodcasts.Count < 2)
+            {
+                return Results.Content("There are not enough podcasts in this genre.");
+            }
+
+            List<ShowdownResult> showdownResults = db.ShowdownResults
+                       .Where(sr => sr.UserId == userId && sr.GenreId == genreId)
+                       .ToList();
+
+            int num = 1;
+
+            // this k!
+            int denom = 2;
+
+            //Combination formula: n! / (k! * (n - k)!)
+
+            // int = 2 so we avoid the n returning itself by multiply by 1
+            for (int i = 2; i <= totalPodcasts.Count; i++)
+            {
+                // This is the (n-k)!
+                if (i <= totalPodcasts.Count - 2)
+                {
+                    denom *= i;
+                }
+
+                // n!
+                num *= i;
+            }
+
+            // To be Fixed
+            if (showdownResults.Count >= num / denom)
+            {
+                return Results.Ok("Message");
+            }
+
+            List<int> possibleIds = totalPodcasts.Where(tp => showdownResults.Count(sr => tp == sr.LosingPodcastId || tp == sr.WinningPodcastId) < totalPodcasts.Count - 1).ToList();
+
+            Random random = new Random();
+
+
+            // index of the first podcast
+            int randomPodcast = random.Next(possibleIds.Count);
+
+            // id of random podcast - first podcast Id
+            var id = possibleIds[randomPodcast];
+
+            // Remove the id of the podcast that has been selected or the one of the podcast that have already been compared to the podcast that has been selected.
+            List<int> compareIds = totalPodcasts.Where(tp => tp != id && !showdownResults.Any(sr => (sr.WinningPodcastId == id && sr.LosingPodcastId == tp) || (sr.LosingPodcastId == id && sr.WinningPodcastId == tp))).ToList();
+
+            // index of the second podcast
+            int randomPodcast2 = random.Next(compareIds.Count);
+
+            var id2 = compareIds[randomPodcast2];
+
+            List<Podcast> showdownPodcasts = db.Podcasts.Where(p => p.Id == id || p.Id == id2).ToList();
+
+            return Results.Ok(showdownPodcasts);
         });
     }
-}
 
+}
