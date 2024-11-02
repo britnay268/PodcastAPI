@@ -58,5 +58,6 @@ app.MapEpisodeEndpoints();
 app.MapPodcastEndpoints();
 app.MapGenreEndpoints();
 app.MapUserEndpoints();
+app.MapShowdownEndpoints();
 
 app.Run();
