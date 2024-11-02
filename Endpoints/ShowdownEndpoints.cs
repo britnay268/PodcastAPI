@@ -60,6 +60,21 @@ public static class ShowdownEndpoints
             db.SaveChanges();
             return Results.Created();
         });
+
+        group.MapGet("/podcasts/showdown/{genreId}", (PodcastAPIDbContext db, int genreId, int userId) =>
+        {
+            if (!db.Genres.Any(g => g.Id == genreId))
+            {
+                return Results.NotFound("Genre id is not valid!");
+            }
+
+            if (!db.Users.Any(u => u.Id == userId))
+            {
+                return Results.NotFound("UserId is not valid!");
+            }
+
+            return Results.Ok();
+        });
     }
 }
 
