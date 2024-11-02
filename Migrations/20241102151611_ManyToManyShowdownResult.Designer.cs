@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PodcastAPI.Data;
@@ -11,9 +12,10 @@ using PodcastAPI.Data;
 namespace PodcastAPI.Migrations
 {
     [DbContext(typeof(PodcastAPIDbContext))]
-    partial class PodcastAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241102151611_ManyToManyShowdownResult")]
+    partial class ManyToManyShowdownResult
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
