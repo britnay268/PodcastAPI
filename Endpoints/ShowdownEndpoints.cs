@@ -105,10 +105,10 @@ public static class ShowdownEndpoints
                 num *= i;
             }
 
-            // To be Fixed
+            // If there is no more comparisons that can be made
             if (showdownResults.Count >= num / denom)
             {
-                return Results.Ok("Message");
+                return Results.NoContent();
             }
 
             List<int> possibleIds = totalPodcasts.Where(tp => showdownResults.Count(sr => tp == sr.LosingPodcastId || tp == sr.WinningPodcastId) < totalPodcasts.Count - 1).ToList();
