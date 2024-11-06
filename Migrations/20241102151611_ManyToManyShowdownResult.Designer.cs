@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PodcastAPI.Data;
@@ -11,9 +12,10 @@ using PodcastAPI.Data;
 namespace PodcastAPI.Migrations
 {
     [DbContext(typeof(PodcastAPIDbContext))]
-    partial class PodcastAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241102151611_ManyToManyShowdownResult")]
+    partial class ManyToManyShowdownResult
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -497,9 +499,6 @@ namespace PodcastAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("GenreId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("LosingPodcastId")
                         .HasColumnType("integer");
 
@@ -521,7 +520,6 @@ namespace PodcastAPI.Migrations
                         new
                         {
                             Id = 1,
-                            GenreId = 7,
                             LosingPodcastId = 5,
                             UserId = 1,
                             WinningPodcastId = 1
@@ -529,7 +527,6 @@ namespace PodcastAPI.Migrations
                         new
                         {
                             Id = 2,
-                            GenreId = 7,
                             LosingPodcastId = 3,
                             UserId = 2,
                             WinningPodcastId = 5
@@ -537,7 +534,6 @@ namespace PodcastAPI.Migrations
                         new
                         {
                             Id = 3,
-                            GenreId = -1,
                             LosingPodcastId = 4,
                             UserId = 3,
                             WinningPodcastId = 5
@@ -545,7 +541,6 @@ namespace PodcastAPI.Migrations
                         new
                         {
                             Id = 4,
-                            GenreId = 7,
                             LosingPodcastId = 1,
                             UserId = 4,
                             WinningPodcastId = 5
@@ -553,7 +548,6 @@ namespace PodcastAPI.Migrations
                         new
                         {
                             Id = 5,
-                            GenreId = -1,
                             LosingPodcastId = 3,
                             UserId = 1,
                             WinningPodcastId = 2

@@ -178,6 +178,7 @@ public static class PodcastEndpoint
         })
         .WithOpenApi()
         .Produces<List<Podcast>>(StatusCodes.Status200OK);
+
         group.MapPost("/podcasts", async (IPodcastService podcastService, PodcastSubmitDTO podcastSubmit) =>
         {
             var addPodcast = await podcastService.CreatePodcastAsync(podcastSubmit);
@@ -197,7 +198,6 @@ public static class PodcastEndpoint
         .Produces<Podcast>(StatusCodes.Status201Created)
         .Produces(StatusCodes.Status404NotFound);
 
-        // Add comment
         group.MapPut("/podcasts/{podcastId}", async (IPodcastService podcastService, int podcastId, PodcastSubmitDTO podcastSubmit) =>
         {
             if (podcastSubmit.Id != podcastId)

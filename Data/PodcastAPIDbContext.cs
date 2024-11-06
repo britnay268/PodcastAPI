@@ -37,7 +37,17 @@ public class PodcastAPIDbContext : DbContext
             .HasForeignKey(p => p.UserId)
             .IsRequired();
 
-        modelBuilder.Entity<Episode>().HasData(EpisodeData.Episodes);
+        modelBuilder.Entity<Podcast>()
+            .HasMany<ShowdownResult>()
+            .WithOne()
+            .HasForeignKey(sr => sr.WinningPodcastId);
+
+        modelBuilder.Entity<Podcast>()
+            .HasMany<ShowdownResult>()
+            .WithOne()
+            .HasForeignKey(sr => sr.LosingPodcastId);
+
+modelBuilder.Entity<Episode>().HasData(EpisodeData.Episodes);
         modelBuilder.Entity<FavoriteEpisode>().HasData(FavoriteEpisodeData.FavoriteEpisodes);
         modelBuilder.Entity<FavoritePodcast>().HasData(FavoritePodcastData.FavoritePodcasts);
         modelBuilder.Entity<Genre>().HasData(GenreData.Genres);
