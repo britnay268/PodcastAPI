@@ -53,7 +53,8 @@ public static class ShowdownEndpoints
             {
                 WinningPodcastId = showdownResult.WinningPodcastId,
                 LosingPodcastId = showdownResult.LosingPodcastId,
-                UserId = showdownResult.UserId
+                UserId = showdownResult.UserId,
+                GenreId = winningPodcast.GenreId == losingPodcast.GenreId ? winningPodcast.GenreId : -1
             };
 
             db.ShowdownResults.Add(newShowdownResult);
