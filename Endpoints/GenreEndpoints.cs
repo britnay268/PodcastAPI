@@ -28,6 +28,8 @@ namespace PodcastAPI.Endpoints
                     .Include(p => p.Genre)
                     .Include(p => p.Episodes)
                     .Include(p => p.UsersFavorited)
+                    .Include(p => p.WinningShowdowns)
+                    .Include(p => p.LosingShowdowns)
                     .OrderBy(p => p.Title)
                     .ToListAsync();
 
@@ -53,7 +55,9 @@ namespace PodcastAPI.Endpoints
                         pg.User.ImageUrl
                     },
                     EpisodeCount = pg.Episodes.Count,
-                    Favorite = pg.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
+                    Favorite = pg.UsersFavorited.Any(uf => uf.Id == userFavoritesId),
+                    pg.ShowdownWins,
+                    pg.ShowdownLosses
                 }));
             });
         }

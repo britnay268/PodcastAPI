@@ -38,12 +38,12 @@ public class PodcastAPIDbContext : DbContext
             .IsRequired();
 
         modelBuilder.Entity<Podcast>()
-            .HasMany<ShowdownResult>()
+            .HasMany(p => p.WinningShowdowns)
             .WithOne()
             .HasForeignKey(sr => sr.WinningPodcastId);
 
         modelBuilder.Entity<Podcast>()
-            .HasMany<ShowdownResult>()
+            .HasMany(p => p.LosingShowdowns)
             .WithOne()
             .HasForeignKey(sr => sr.LosingPodcastId);
 

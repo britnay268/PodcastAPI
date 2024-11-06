@@ -16,6 +16,14 @@ namespace PodcastAPI.Models
         public Genre Genre { get; set; }
         public List<Episode> Episodes { get; set; }
         public List<User> UsersFavorited { get; set; }
+        public List<ShowdownResult> WinningShowdowns { get; set; } = [];
+        public List<ShowdownResult> LosingShowdowns { get; set; } = [];
+        public int ShowdownWins => (
+                WinningShowdowns.Count()
+            );
+        public int ShowdownLosses => (
+                LosingShowdowns.Count()
+            );
     }
 }
 

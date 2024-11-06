@@ -31,7 +31,9 @@ public static class PodcastEndpoint
                     p.User.ImageUrl
                 },
                 EpisodeCount = p.Episodes.Count,
-                Favorite = p.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userFavoritesId),
+                p.ShowdownWins,
+                p.ShowdownLosses
             }));
         })
         .WithOpenApi()
@@ -57,7 +59,9 @@ public static class PodcastEndpoint
                     p.User.ImageUrl
                 },
                 EpisodeCount = p.Episodes.Count,
-                Favorite = p.UsersFavorited.Any(uf => uf.Id == userId)
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userId),
+                p.ShowdownWins,
+                p.ShowdownLosses
             }));
         })
         .WithOpenApi()
@@ -96,7 +100,9 @@ public static class PodcastEndpoint
                     e.CreatedOn,
                     Favorited = e.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
                 }),
-                Favorite = podcast.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
+                Favorite = podcast.UsersFavorited.Any(uf => uf.Id == userFavoritesId),
+                podcast.ShowdownWins,
+                podcast.ShowdownLosses
             });
         })
         .WithOpenApi()
@@ -142,7 +148,9 @@ public static class PodcastEndpoint
                     p.User.ImageUrl
                 },
                 EpisodeCount = p.Episodes.Count,
-                Favorite = p.UsersFavorited.Any(uf => uf.Id == userFavoritesId)
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userFavoritesId),
+                p.ShowdownWins,
+                p.ShowdownLosses
             }));
         })
         .WithOpenApi()
@@ -173,7 +181,9 @@ public static class PodcastEndpoint
                     p.User.ImageUrl
                 },
                 EpisodeCount = p.Episodes.Count,
-                Favorite = p.UsersFavorited.Any(uf => uf.Id == userId)
+                Favorite = p.UsersFavorited.Any(uf => uf.Id == userId),
+                p.ShowdownWins,
+                p.ShowdownLosses
             }));
         })
         .WithOpenApi()

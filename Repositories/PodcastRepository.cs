@@ -69,6 +69,8 @@ public class PodcastRepository : IPodcastRepository
             .Include(p => p.Genre)
             .Include(p => p.Episodes)
             .Include(p => p.UsersFavorited)
+            .Include(p => p.WinningShowdowns)
+            .Include(p => p.LosingShowdowns)
             .OrderBy(p => p.Title)
             .ToListAsync();
     }
@@ -81,6 +83,8 @@ public class PodcastRepository : IPodcastRepository
             .Include(p => p.Episodes.OrderBy(e => e.CreatedOn))
             .ThenInclude(e => e.UsersFavorited)
             .Include(p => p.UsersFavorited)
+            .Include(p => p.WinningShowdowns)
+            .Include(p => p.LosingShowdowns)
             .SingleOrDefaultAsync(p => p.Id == podcastId);
     }
 
@@ -91,6 +95,8 @@ public class PodcastRepository : IPodcastRepository
             .Include(p => p.Genre)
             .Include(p => p.Episodes)
             .Include(p => p.UsersFavorited)
+            .Include(p => p.WinningShowdowns)
+            .Include(p => p.LosingShowdowns)
             .OrderBy(p => p.Title)
             .ToListAsync();
     }
@@ -169,6 +175,8 @@ public class PodcastRepository : IPodcastRepository
             .Include(p => p.Genre)
             .Include(p => p.Episodes)
             .Include(p => p.UsersFavorited)
+            .Include(p => p.WinningShowdowns)
+            .Include(p => p.LosingShowdowns)
             .OrderBy(p => p.Title)
             .ToListAsync();
 
@@ -189,6 +197,8 @@ public class PodcastRepository : IPodcastRepository
             .Include(p => p.Genre)
             .Include(p => p.Episodes)
             .Include(p => p.UsersFavorited)
+            .Include(p => p.WinningShowdowns)
+            .Include(p => p.LosingShowdowns)
             .OrderBy(p => p.Title)
             .ToListAsync();
 

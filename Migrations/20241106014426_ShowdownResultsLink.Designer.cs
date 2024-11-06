@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PodcastAPI.Data;
@@ -11,9 +12,10 @@ using PodcastAPI.Data;
 namespace PodcastAPI.Migrations
 {
     [DbContext(typeof(PodcastAPIDbContext))]
-    partial class PodcastAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241106014426_ShowdownResultsLink")]
+    partial class ShowdownResultsLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +57,7 @@ namespace PodcastAPI.Migrations
 
                     b.HasIndex("PodcastId");
 
-                    b.ToTable("Episodes", (string)null);
+                    b.ToTable("Episodes");
 
                     b.HasData(
                         new
@@ -180,7 +182,7 @@ namespace PodcastAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FavoriteEpisodes", (string)null);
+                    b.ToTable("FavoriteEpisodes");
 
                     b.HasData(
                         new
@@ -283,7 +285,7 @@ namespace PodcastAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FavoritePodcasts", (string)null);
+                    b.ToTable("FavoritePodcasts");
 
                     b.HasData(
                         new
@@ -344,7 +346,7 @@ namespace PodcastAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres", (string)null);
+                    b.ToTable("Genres");
 
                     b.HasData(
                         new
@@ -434,7 +436,7 @@ namespace PodcastAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Podcasts", (string)null);
+                    b.ToTable("Podcasts");
 
                     b.HasData(
                         new
@@ -515,7 +517,7 @@ namespace PodcastAPI.Migrations
 
                     b.HasIndex("WinningPodcastId");
 
-                    b.ToTable("ShowdownResults", (string)null);
+                    b.ToTable("ShowdownResults");
 
                     b.HasData(
                         new
@@ -593,7 +595,7 @@ namespace PodcastAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
 
                     b.HasData(
                         new
