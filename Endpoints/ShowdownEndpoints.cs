@@ -79,7 +79,7 @@ public static class ShowdownEndpoints
 
             if (totalPodcasts.Count < 2)
             {
-                return Results.Content("There are not enough podcasts in this genre.");
+                return Results.Ok("There are not enough podcasts in this genre.");
             }
 
             List<ShowdownResult> showdownResults = db.ShowdownResults
