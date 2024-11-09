@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1706.11
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastAPI", "PodcastAPI.csproj", "{05284A82-6883-4ECD-B7AC-AEFEAED4883A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastAPI", "PodcastAPI\PodcastAPI.csproj", "{3402F7DA-5E57-452A-9567-B60EA8757CF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodcastAPI.Tests", "PodcastAPI.Tests\PodcastAPI.Tests.csproj", "{ED68B4DC-2674-4BB5-A67F-5186CBBE049B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{05284A82-6883-4ECD-B7AC-AEFEAED4883A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05284A82-6883-4ECD-B7AC-AEFEAED4883A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05284A82-6883-4ECD-B7AC-AEFEAED4883A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05284A82-6883-4ECD-B7AC-AEFEAED4883A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3402F7DA-5E57-452A-9567-B60EA8757CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3402F7DA-5E57-452A-9567-B60EA8757CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3402F7DA-5E57-452A-9567-B60EA8757CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3402F7DA-5E57-452A-9567-B60EA8757CF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED68B4DC-2674-4BB5-A67F-5186CBBE049B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED68B4DC-2674-4BB5-A67F-5186CBBE049B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED68B4DC-2674-4BB5-A67F-5186CBBE049B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED68B4DC-2674-4BB5-A67F-5186CBBE049B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
